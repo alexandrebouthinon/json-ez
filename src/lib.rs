@@ -99,6 +99,7 @@ use crate::error::Error;
 
 use std::collections::HashMap;
 use std::error::Error;
+use std::fmt::{self, Display, Formatter};
 
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{
@@ -138,7 +139,7 @@ use serde_json::{
 ///     Ok(())
 /// }
 /// ```
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Json {
     #[serde(flatten)]
     json_data: HashMap<String, Value>,
@@ -164,19 +165,40 @@ impl Json {
     /// # Errors
     /// Return an `Err(json_ez::error::NotFound)` if the given
     /// key doesn't exists in the current `Json` instance
+    pub fn get<T: DeserializeOwned>(&self, k: &str) -> Result<T, Box<dyn Error>> {
         let value = match self.json_data.get(k.into()) {
             Some(v) => v,
-            None => {
-                return Err(Error::NotFound(
-                    k.into(),
-                    format!("{:?}", &self.json_data),
-                ))
-            }
+            None => return Err(Box::new(NotFound::new(k.into(), &self)?)),
         };
-        match from_value(value.clone()) {
-            Ok(v) => Ok(v),
-            Err(_) => Err(Error::CannotConvert(format!("{:?}", value))),
+        Ok(from_value(value.clone()).unwrap())
         }
+    }
+
+/// Custom error type used when key is not found in a JSON object.
+#[derive(Debug)]
+pub struct NotFound {
+    key: String,
+    json: String,
+}
+
+impl NotFound {
+    /// Create a new `NotFound` error given the errored key and the targeted JSON object
+    pub fn new(key: String, json: &Json) -> Result<Self, Box<dyn Error>> {
+        Ok(NotFound {
+            key,
+            json: serialise!(json)?,
+        })
+    }
+}
+
+impl Error for NotFound {}
+
+impl Display for NotFound {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        f.write_str(&format!(
+            "NotFound: Cannot found key {} in {}",
+            self.key, self.json
+        ))
     }
 }
 
