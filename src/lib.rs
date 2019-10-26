@@ -190,8 +190,8 @@ impl Json {
             None => return Err(Box::new(NotFound::new(k.into(), &self)?)),
         };
         Ok(from_value(value.clone()).unwrap())
-        }
     }
+}
 
 /// Custom error type used when key is not found in a JSON object.
 #[derive(Debug)]
