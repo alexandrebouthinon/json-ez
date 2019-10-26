@@ -1,0 +1,74 @@
+_rust_base: &rust_base
+  stage: Tests
+  language: rust
+  sudo: required
+  cache: cargo
+  before_cache:
+    # Travis can't cache files that are not readable by "others"
+    - chmod -R a+r $HOME/.cargo
+
+_coverage: &coverage
+  <<: *rust_base
+  addons:
+    apt:
+      packages:
+        - libcurl4-openssl-dev
+        - libelf-dev
+        - libdw-dev
+        - cmake
+        - gcc
+        - binutils-dev
+        - libiberty-dev
+  after_success: |
+    wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+    tar xzf master.tar.gz &&
+    cd kcov-master &&
+    mkdir build &&
+    cd build &&
+    cmake .. &&
+    make &&
+    make install DESTDIR=../../kcov-build &&
+    cd ../.. &&
+    rm -rf kcov-master &&
+    for file in target/debug/json_ez*; do [ -x "${file}" ] || continue; mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+    bash <(curl -s https://codecov.io/bash) &&
+    echo "Uploaded code coverage"
+
+jobs:
+  include:
+    - os: linux
+      rust: stable 
+      <<: *coverage
+
+    - os: linux
+      rust: beta 
+      <<: *rust_base
+
+    - os: linux
+      rust: nightly 
+      <<: *rust_base
+
+    - os: osx
+      rust: stable 
+      <<: *rust_base
+
+    - os: osx
+      rust: beta 
+      <<: *rust_base
+
+    - os: osx
+      rust: nightly 
+      <<: *rust_base
+
+    - os: windows
+      rust: stable 
+      <<: *rust_base
+
+    - os: windows
+      rust: beta 
+      <<: *rust_base
+    
+    - os: windows
+      rust: nightly 
+      <<: *rust_base
+
