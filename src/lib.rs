@@ -321,3 +321,80 @@ macro_rules! serialise {
         serde_json::to_string(&$item)
     }};
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use std::error::Error;
+
+    #[test]
+    fn json_add() -> Result<(), Box<dyn Error>> {
+        let mut json = inline!("a" => "valid", "json" => "object");
+        json.add("another", "item");
+        assert_eq!("item", &json.get::<String>("another")?);
+        Ok(())
+    }
+
+    #[test]
+    fn json_add_overwrite() -> Result<(), Box<dyn Error>> {
+        let mut json = inline!("a" => "valid", "json" => "object");
+        json.add("a", "also valid");
+        assert_eq!("also valid", &json.get::<String>("a")?);
+        Ok(())
+    }
+
+    #[test]
+    fn json_get_ok() -> Result<(), Box<dyn Error>> {
+        let json = inline!("a" => "valid", "json" => "object");
+        let item: String = json.get("a")?;
+        assert_eq!("valid", &item);
+        Ok(())
+    }
+
+    #[test]
+    fn json_get_err_not_found() -> Result<(), Box<dyn Error>> {
+        let json = inline!("the" => "json");
+        let item = json.get::<String>("notFound");
+        assert!(item.is_err());
+        let err = item.unwrap_err();
+        assert_eq!(
+            r#"NotFound: Cannot found key notFound in {"the":"json"}"#,
+            format!("{}", err)
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn inline_declaration() -> Result<(), Box<dyn Error>> {
+        let json = inline!("a" => "valid", "json" => "object");
+        assert_eq!("valid", &json.get::<String>("a")?);
+        assert_eq!("object", &json.get::<String>("json")?);
+        Ok(())
+    }
+
+    #[test]
+    fn deserialise_ok() -> Result<(), Box<dyn Error>> {
+        let json_string = r#"{ "valid_json": true }"#;
+        let json: Result<Json, serde_json::error::Error> = deserialise!(json_string);
+        assert!(json.is_ok());
+        assert_eq!(true, json?.get::<bool>("valid_json")?);
+        Ok(())
+    }
+
+    #[test]
+    fn deserialise_err() -> Result<(), Box<dyn Error>> {
+        let json_string = "not a valid json string";
+        let json = deserialise!(json_string);
+        assert!(json.is_err());
+        Ok(())
+    }
+
+    #[test]
+    fn serialise() -> Result<(), Box<dyn Error>> {
+        let json = inline!("valid" => "json");
+        let json_string: Result<String, serde_json::error::Error> = serialise!(json);
+        assert!(json_string.is_ok());
+        assert_eq!(r#"{"valid":"json"}"#, json_string?);
+        Ok(())
+    }
+}
