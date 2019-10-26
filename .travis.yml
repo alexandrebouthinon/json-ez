@@ -6,33 +6,31 @@ _rust_base: &rust_base
   before_cache:
     # Travis can't cache files that are not readable by "others"
     - chmod -R a+r $HOME/.cargo
+  script:
+    - cargo clean
+    - cargo build
+    - cargo test
 
 _coverage: &coverage
   <<: *rust_base
+  env:
+    - TARPAULIN_VERSION: 0.9.0
   addons:
     apt:
       packages:
-        - libcurl4-openssl-dev
-        - libelf-dev
-        - libdw-dev
-        - cmake
-        - gcc
-        - binutils-dev
-        - libiberty-dev
-  after_success: |
-    wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
-    tar xzf master.tar.gz &&
-    cd kcov-master &&
-    mkdir build &&
-    cd build &&
-    cmake .. &&
-    make &&
-    make install DESTDIR=../../kcov-build &&
-    cd ../.. &&
-    rm -rf kcov-master &&
-    for file in target/debug/json_ez*; do [ -x "${file}" ] || continue; mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
-    bash <(curl -s https://codecov.io/bash) &&
-    echo "Uploaded code coverage"
+       - libssl-dev
+  before_cache:
+    - wget https://github.com/xd009642/tarpaulin/releases/download/$TARPAULIN_VERSION/cargo-tarpaulin-$TARPAULIN_VERSION-travis.tar.gz
+    - tar xfz cargo-tarpaulin-$TARPAULIN_VERSION-travis.tar.gz && mv cargo-tarpaulin cargo
+    # Travis can't cache files that are not readable by "others"
+    - chmod -R a+r $HOME/.cargo
+  after_success:
+    - ./cargo tarpaulin --out Xml
+    - bash <(curl -s https://codecov.io/bash)
+
+matrix:
+  allow_failures:
+    - rust: nightly
 
 jobs:
   include:
