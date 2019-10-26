@@ -72,3 +72,15 @@ jobs:
       rust: nightly 
       <<: *rust_base
 
+    - stage: "Deployments"
+      name: "Crates.io"
+      if: branch = master
+      rust: stable
+      <<: *rust_base
+      script: echo "Deploying 'json_ez' to crates.io"
+      deploy:
+        provider: cargo
+        token:
+          secure: "iFfdDcCyzg1Uxs9WFnjbTRJ4N3sAEC3M3RPCimumHCKpvU4Ez24VnCG2yMJnI0KlqwTEFyNQlnYzNwZG56IBpv4uOSe6mzQkcYEyaMcRPOQ7wV7oCsI1YguFVOR5c4LQkfn9AmZvKQFZEk2VSoOFpOjZWSWNenETSieRsBHU7DmoQHCC7e8bhr3iFD2P9fD9s4nODS+6QPatHCEcLCj38V046JTZyWgikrikeYDe4GKmSewvC6nfUw+M6F7/pJLwQolgjzoHoub6hRONXPGDqoc93OADgl6WtmnQecD3XBLW8rLnDOpjotpkugTvE8NiKc9WgnIXcoggAp55+ShJ4zo4X7BbB+fiII5kDYjuplos708hkJummQpHga9kGm+Y+5cli//vd7KlQ1TAxlRdVDegR379wNVoXIcBytfgF0ckpzewXIsVwiYPqDJfNwV7cE6PXAfUTdEKYfZ3jMXn/tmkvQZO/1LXpIPEHEIibZCXS9NjJ6uZM3Wf551HYLFaVhBpaiQ5CkRghgRUid9HREZu6/gcb0Ex2/H3Y6u/NAQ9On7/bPWyiCpXR5WVD3nlYNo6ojpBKTXDyPS9VBGbF8QNeH+N11l/zztaAcxU/CQL1cAV8qCr/Ik3b+hRMbXSKUojjY3LygYUOOdBQde6KRdd2Jb9c3aHroSCMJGlp2c="
+        on:
+          branch: master
