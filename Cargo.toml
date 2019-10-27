@@ -1,5 +1,6 @@
 [package]
 name = "json-ez"
+description = "This crate is a wrapper around serde and serde_json crates. It does not aim to replace those two awesome crates, the goal is to provide another more user friendly way to deal with JSON objects in Rust."
 version = "0.1.0"
 authors = ["Alexandre Bouthinon <bouthinon.alexandre@gmail.com>"]
 edition = "2018"
