@@ -5,8 +5,8 @@ version = "0.1.0"
 authors = ["Alexandre Bouthinon <bouthinon.alexandre@gmail.com>"]
 edition = "2018"
 license = "MIT"
-homepage = "https://github.com/alexandrebouthinon/json_ez"
-repository = "https://github.com/alexandrebouthinon/json_ez.git"
+homepage = "https://github.com/alexandrebouthinon/json-ez"
+repository = "https://github.com/alexandrebouthinon/json-ez.git"
 
 [dependencies]
 serde_json = "1.0"
