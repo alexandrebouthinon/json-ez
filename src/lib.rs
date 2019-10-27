@@ -22,24 +22,20 @@
 
 //! # Json EZ
 //! This crate is a wrapper around `serde` and `serde_json` crates.
-//! Those two libraries are awesome when you want to serialise Rust struct
-//! or deserialise JSON string into Rust string.
-//!
-//! However, when it comes to creating or manipulating JSON documents,
-//! they often result in unnecessarily long and complex code.
+//! It does not aim to replace those two awesome crates, the goal is
+//! to provide another more user friendly way to deal with JSON objects in Rust.
 //!
 //! If your main goal is to simply create a JSON document,
 //! for example when calling a remote JSON API, this box provides you with
 //! simple wrappers like Rust macros but also implicit cast when adding
 //! or getting data from you JSON object..
 //!
-//! ## Declaring new JSON document and fill it with data
+//! ## Declaring a new JSON document and fill it with data
 //! ```
 //! use json_ez::Json;
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let mut j_object = Json::new();
-//!     let quote = "So Long, and Thanks for All the Fish!";
 //!
 //!     // Fill the new created object
 //!     j_object.add("key1", quote);
@@ -54,6 +50,7 @@
 //!     // Works also with explicit casts
 //!     let same_string = j_object.get::<String>("key1")?;
 //!
+//!     let quote = "So Long, and Thanks for All the Fish!";
 //!     assert_eq!(quote, &string);
 //!     assert_eq!(quote, &same_string);
 //!     assert_eq!(true, some_boolean);
