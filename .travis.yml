@@ -1,6 +1,5 @@
 _rust_base: &rust_base
   language: rust
-  sudo: required
   cache: cargo
   before_cache:
     # Travis can't cache files that are not readable by "others"
@@ -27,11 +26,9 @@ _coverage: &coverage
     - ./cargo tarpaulin --out Xml
     - bash <(curl -s https://codecov.io/bash)
 
-matrix:
+jobs:
   allow_failures:
     - rust: nightly
-
-jobs:
   include:
     - os: linux
       stage: Tests
