@@ -36,6 +36,7 @@
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let mut j_object = Json::new();
+//!     let quote = "So Long, and Thanks for All the Fish!";
 //!
 //!     // Fill the new created object
 //!     j_object.add("key1", quote);
@@ -50,7 +51,6 @@
 //!     // Works also with explicit casts
 //!     let same_string = j_object.get::<String>("key1")?;
 //!
-//!     let quote = "So Long, and Thanks for All the Fish!";
 //!     assert_eq!(quote, &string);
 //!     assert_eq!(quote, &same_string);
 //!     assert_eq!(true, some_boolean);
