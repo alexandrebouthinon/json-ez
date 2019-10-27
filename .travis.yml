@@ -1,5 +1,4 @@
 _rust_base: &rust_base
-  stage: Tests
   language: rust
   sudo: required
   cache: cargo
@@ -35,38 +34,47 @@ matrix:
 jobs:
   include:
     - os: linux
+      stage: Tests
       rust: stable 
       <<: *coverage
 
     - os: linux
+      stage: Tests
       rust: beta 
       <<: *rust_base
 
     - os: linux
+      stage: Tests
       rust: nightly 
       <<: *rust_base
 
     - os: osx
+      stage: Tests
       rust: stable 
       <<: *rust_base
 
     - os: osx
+      stage: Tests
       rust: beta 
       <<: *rust_base
 
     - os: osx
+      stage: Tests
       rust: nightly 
       <<: *rust_base
 
     - os: windows
+      stage: Tests
       rust: stable 
       <<: *rust_base
 
     - os: windows
+      stage: Tests
       rust: beta 
       <<: *rust_base
     
     - os: windows
+      stage: Tests
       rust: nightly 
       <<: *rust_base
 
