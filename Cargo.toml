@@ -7,6 +7,7 @@ edition = "2018"
 license = "MIT"
 homepage = "https://github.com/alexandrebouthinon/json-ez"
 repository = "https://github.com/alexandrebouthinon/json-ez.git"
+documentation = "https://docs.rs/json-ez/0.1.0/json_ez"
 
 [dependencies]
 serde_json = "1.0"
