@@ -9,7 +9,7 @@
     <img src="https://deps.rs/crate/json-ez/0.1.0/status.svg"/>
   </a>
   <a href="https://crates.io/crates/json-ez">
-    <img src="https://img.shields.io/crates/v/json-ez.svg?maxAge=2592000"/>
+    <img src="https://img.shields.io/crates/v/json-ez.svg"/>
   </a>
   <a href="https://travis-ci.com/alexandrebouthinon/json-ez">
     <img src="https://travis-ci.com/alexandrebouthinon/json-ez.svg?branch=master"/>
