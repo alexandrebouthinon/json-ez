@@ -2,20 +2,20 @@
   <img src="https://user-images.githubusercontent.com/7868838/67627583-1df9c300-f85f-11e9-9c2e-391f16b4e1c3.png"/>
 </p>
 <p align="center">
-  <a href="https://docs.rs/json-ez">
-    <img src="https://docs.rs/json-ez/badge.svg"/>
-  </a>
   <a href="https://deps.rs/crate/json-ez/0.1.0">
     <img src="https://deps.rs/crate/json-ez/0.1.0/status.svg"/>
-  </a>
-  <a href="https://crates.io/crates/json-ez">
-    <img src="https://img.shields.io/crates/v/json-ez.svg"/>
   </a>
   <a href="https://travis-ci.com/alexandrebouthinon/json-ez">
     <img src="https://travis-ci.com/alexandrebouthinon/json-ez.svg?branch=master"/>
   </a>
   <a href="https://codecov.io/gh/alexandrebouthinon/json-ez">
     <img src="https://codecov.io/gh/alexandrebouthinon/json-ez/branch/master/graph/badge.svg" />
+  </a>
+  <a href="https://crates.io/crates/json-ez">
+    <img src="https://img.shields.io/crates/v/json-ez.svg"/>
+  </a>
+  <a href="https://docs.rs/json-ez">
+    <img src="https://docs.rs/json-ez/badge.svg"/>
   </a>
   <a href="https://github.com/alexandrebouthinon/json-ez/blob/master/LICENSE">
     <img alt="undefined" src="https://img.shields.io/github/license/alexandrebouthinon/json-ez.svg?style=flat">
