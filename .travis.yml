@@ -6,8 +6,8 @@ _rust_base: &rust_base
     - chmod -R a+r $HOME/.cargo
   script:
     - cargo clean
-    - cargo build
-    - cargo test
+    - cargo build -j 2
+    - cargo test -j 2
 
 _coverage: &coverage
   <<: *rust_base
