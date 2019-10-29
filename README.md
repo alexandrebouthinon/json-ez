@@ -2,8 +2,8 @@
   <img src="https://user-images.githubusercontent.com/7868838/67627583-1df9c300-f85f-11e9-9c2e-391f16b4e1c3.png"/>
 </p>
 <p align="center">
-  <a href="https://deps.rs/crate/json-ez/0.1.0">
-    <img src="https://deps.rs/crate/json-ez/0.1.0/status.svg"/>
+  <a href="https://deps.rs/crate/json-ez/0.2.0">
+    <img src="https://deps.rs/crate/json-ez/0.2.0/status.svg"/>
   </a>
   <a href="https://travis-ci.com/alexandrebouthinon/json-ez">
     <img src="https://travis-ci.com/alexandrebouthinon/json-ez.svg?branch=master"/>
