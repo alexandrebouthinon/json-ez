@@ -119,7 +119,8 @@ use std::fmt::{self, Display, Formatter};
 
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{
-    json,
+    error::Error as SerdeError,
+    from_str, json, to_string,
     value::{from_value, Value},
 };
 
@@ -310,10 +311,14 @@ macro_rules! inline {
 /// ```
 #[macro_export]
 macro_rules! deserialise {
-    ($item: expr) => {{
-        use $crate::Json;
-        serde_json::from_str::<Json>(&$item)
+    ($item: tt) => {{
+        $crate::deserialise_inner($item.into())
     }};
+}
+
+#[doc(hidden)]
+pub fn deserialise_inner(string: String) -> Result<Json, SerdeError> {
+    from_str(&string)
 }
 
 /// Serialize the given `json_ez::Json` instance as a `String` of JSON.
@@ -333,9 +338,14 @@ macro_rules! deserialise {
 /// ```
 #[macro_export]
 macro_rules! serialise {
-    ($item: expr) => {{
-        serde_json::to_string(&$item)
+    ($item: tt) => {{
+        $crate::serialise_inner(&$item)
     }};
+}
+
+#[doc(hidden)]
+pub fn serialise_inner(json: &Json) -> Result<String, SerdeError> {
+    to_string(&json)
 }
 
 #[cfg(test)]
